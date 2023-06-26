@@ -18,8 +18,9 @@ class AuthService {
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
       return userCredential.user;
-    } catch (e) {
-      print(e);
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
+      return null;
     }
   }
 
