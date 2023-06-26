@@ -4,7 +4,7 @@ class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
+  Widget build(BuildContext context) => Center(
+        child: Text("Profile"),
+      );
 }

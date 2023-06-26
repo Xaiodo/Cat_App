@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/home/pages/cat_detailed_view.dart';
-import '../pages/home/view/home_view.dart';
+import '../pages/bottom_navigation/pages/cat_detailed_view.dart';
+import '../pages/bottom_navigation/view/bottom_navigation_view.dart';
 
 class AppRouter {
   AppRouter({required AppBloc appBloc}) : _appBloc = appBloc;
@@ -20,7 +20,8 @@ class AppRouter {
       GoRoute(
         path: '/',
         name: 'home',
-        pageBuilder: (context, state) => const MaterialPage(child: HomeView()),
+        pageBuilder: (context, state) =>
+            const MaterialPage(child: BottomNavigationView()),
       ),
       GoRoute(
         path: '/cat_detailed',
