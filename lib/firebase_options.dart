@@ -45,17 +45,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyB6r5P-0OwdEHAXlVK3NGHA1wkqsLNsWAo',
-    appId: '1:1034758976128:web:ba75527e97b3ad43be6c65',
+    appId: '1:1034758976128:web:7deaf91294dcda23be6c65',
     messagingSenderId: '1034758976128',
     projectId: 'catapp-da37a',
     authDomain: 'catapp-da37a.firebaseapp.com',
     storageBucket: 'catapp-da37a.appspot.com',
-    measurementId: 'G-HCK4DNMBW6',
+    measurementId: 'G-SEK7XMXT6H',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCG8kjZ2SoaZSXY_gN29v98T43eAUAQCg0',
-    appId: '1:1034758976128:android:a8a77f4d11ca6bf9be6c65',
+    appId: '1:1034758976128:android:d0bd0fac944e1df5be6c65',
     messagingSenderId: '1034758976128',
     projectId: 'catapp-da37a',
     storageBucket: 'catapp-da37a.appspot.com',
@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBTo8yXsOwsvHSS0eVRHuCOtWWkwhCHJTE',
-    appId: '1:1034758976128:ios:2f3181a86c0bda86be6c65',
+    appId: '1:1034758976128:ios:69581a3e22520d88be6c65',
     messagingSenderId: '1034758976128',
     projectId: 'catapp-da37a',
     storageBucket: 'catapp-da37a.appspot.com',
@@ -74,7 +74,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyBTo8yXsOwsvHSS0eVRHuCOtWWkwhCHJTE',
-    appId: '1:1034758976128:ios:2f3181a86c0bda86be6c65',
+    appId: '1:1034758976128:ios:69581a3e22520d88be6c65',
     messagingSenderId: '1034758976128',
     projectId: 'catapp-da37a',
     storageBucket: 'catapp-da37a.appspot.com',
