@@ -12,9 +12,9 @@ class AuthRepository {
   final AuthService _authService;
   final AuthDao _authDao;
 
-  Future<bool> get isLogined async => await _authDao.hasAccessToken();
+  Future<bool> get isLoggedIn async => await _authDao.hasAccessToken();
 
-  Future<bool> login() async {
+  Future<bool> loginWithGoogle() async {
     final User? user = await _authService.signInWithGoogle();
 
     if (user != null) {
