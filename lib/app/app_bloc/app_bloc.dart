@@ -15,6 +15,7 @@ class AppBloc extends Bloc<AppEvent, AppState> with ChangeNotifier {
         super(AppInitializing()) {
     on<AppGoToAuthenticationEvent>(onAppGoToAuthenticationEvent);
     on<AppGoToAuthenticatedEvent>(onAppGoToAuthenticatedEvent);
+    init();
   }
 
   late StreamSubscription _authSubscription;
@@ -35,8 +36,17 @@ class AppBloc extends Bloc<AppEvent, AppState> with ChangeNotifier {
     emit(state.authenticated);
   }
 
-  void login() async {
-    final bool success = await _authRepository.login();
+  void init() async {
+    final bool loggedIn = await _authRepository.isLoggedIn;
+    if (loggedIn) {
+      add(AppGoToAuthenticatedEvent());
+    } else {
+      add(AppGoToAuthenticationEvent());
+    }
+  }
+
+  void loginWithGoogle() async {
+    final bool success = await _authRepository.loginWithGoogle();
 
     if (success) {
       add(AppGoToAuthenticatedEvent());
