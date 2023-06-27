@@ -11,6 +11,9 @@ const String catFactsApiUrl = 'https://catfact.ninja/facts?limit=10';
 const String catImagesApiUrl =
     'https://api.thecatapi.com/v1/images/search?limit=10';
 
+// Hive boxes
+const String catBox = 'catBox';
+
 // Login texts
 const String signInWithGoogleText = 'Sign in with Google';
 const String signInWithFacebookText = 'Sign in with Facebook';

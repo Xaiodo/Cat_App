@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'cat.g.dart';
+
+@HiveType(typeId: 1)
 class Cat extends Equatable {
   const Cat({
     required this.id,
@@ -10,11 +14,17 @@ class Cat extends Equatable {
     this.isLiked = false,
   });
 
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String url;
+  @HiveField(2)
   final String fact;
+  @HiveField(3)
   final int height;
+  @HiveField(4)
   final int width;
+  @HiveField(5)
   final bool isLiked;
 
   Cat copyWith({
