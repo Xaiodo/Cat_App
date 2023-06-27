@@ -22,6 +22,10 @@ class HomeLoaded extends HomeState {
   const HomeLoaded({required super.cats, required super.page});
 }
 
+class HomeNoInternet extends HomeState {
+  const HomeNoInternet({required super.cats, required super.page});
+}
+
 class HomeError extends HomeState {
   final String message;
   const HomeError({
