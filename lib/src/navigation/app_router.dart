@@ -24,8 +24,8 @@ class AppRouter {
             const MaterialPage(child: BottomNavigationView()),
       ),
       GoRoute(
-        path: '/cat_detailed',
-        name: 'cat_detailed',
+        path: '/cat_details',
+        name: 'cat_details',
         pageBuilder: (context, state) =>
             const MaterialPage(child: CatDetailedView()),
       ),
