@@ -3,13 +3,10 @@ import 'package:cat_app/src/pages/bottom_navigation/pages/home/home_view.dart';
 import 'package:cat_app/src/pages/bottom_navigation/pages/profile/profile_view.dart';
 import 'package:cat_app/src/values/app_colors.dart';
 import 'package:cat_app/src/values/app_constants.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../pages/cat_cubit/cat_cubit.dart';
 import '../pages/favorites/favorites_view.dart';
-import '../pages/home/repositories/cat_repository.dart';
 
 class BottomNavigationView extends StatelessWidget {
   const BottomNavigationView({super.key});
@@ -19,12 +16,6 @@ class BottomNavigationView extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (context) => BottomNavigationCubit(),
-          ),
-          BlocProvider(
-            create: (context) => CatCubit(
-              repository: context.read<CatRepository>(),
-              connectivity: context.read<Connectivity>(),
-            ),
           ),
         ],
         child: Builder(
