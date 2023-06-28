@@ -37,28 +37,39 @@ class HomeView extends StatelessWidget {
             );
           }
         },
-        builder: (context, state) => NotificationListener<ScrollNotification>(
-          onNotification: (notification) {
-            if (notification is ScrollEndNotification &&
-                notification.metrics.extentAfter == 0) {
-              context.read<CatCubit>().loadMore();
-            }
-
-            return false;
-          },
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.8,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
-            padding: const EdgeInsets.all(10),
-            itemCount: state.cats.length,
-            itemBuilder: (context, index) =>
-                CatItemWidget(cat: state.cats[index]),
-            physics: const ClampingScrollPhysics(),
-          ),
-        ),
+        builder: (context, state) {
+          if (state.cats.isEmpty) {
+            return const Center(
+              child: Text('No internet connection = no cats'),
+            );
+          }
+          if (state is CatLoaded || state is CatNoInternet) {
+            return NotificationListener<ScrollNotification>(
+              onNotification: (notification) {
+                if (notification is ScrollEndNotification &&
+                    notification.metrics.extentAfter == 0) {
+                  context.read<CatCubit>().loadMore();
+                }
+                return false;
+              },
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.8,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                padding: const EdgeInsets.all(10),
+                itemCount: state.cats.length,
+                itemBuilder: (context, index) => CatItemWidget(
+                  cat: state.cats[index],
+                  heroTag: '${state.cats[index].id}home',
+                ),
+                physics: const ClampingScrollPhysics(),
+              ),
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       );
 }
