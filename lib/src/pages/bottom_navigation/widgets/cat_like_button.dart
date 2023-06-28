@@ -1,6 +1,7 @@
-import 'package:cat_app/src/pages/bottom_navigation/pages/home/home_cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../pages/cat_cubit/cat_cubit.dart';
 
 class CatLikeButton extends StatelessWidget {
   const CatLikeButton({super.key, required this.isLiked, required this.id});
@@ -13,6 +14,6 @@ class CatLikeButton extends StatelessWidget {
           isLiked ? Icons.favorite : Icons.favorite_border,
           color: Colors.red,
         ),
-        onTap: () => context.read<HomeCubit>().likeCat(id),
+        onTap: () => context.read<CatCubit>().likeCat(id),
       );
 }
