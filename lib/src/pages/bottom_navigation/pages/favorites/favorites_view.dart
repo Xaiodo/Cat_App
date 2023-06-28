@@ -16,7 +16,7 @@ class FavoritesView extends StatelessWidget {
               child: Text('No favorite cats. Try to add some'),
             );
           }
-          if (state is CatLoaded) {
+          if (state is CatLoaded || state is CatNoInternet) {
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
