@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:cat_app/app/app_bloc/app_bloc.dart';
+import 'package:cat_app/src/pages/bottom_navigation/pages/home/model/cat.dart';
 import 'package:cat_app/src/pages/login/view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/bottom_navigation/pages/cat_detailed_view.dart';
+import '../pages/bottom_navigation/pages/cat_details_view.dart';
 import '../pages/bottom_navigation/view/bottom_navigation_view.dart';
 
 class AppRouter {
@@ -26,8 +27,17 @@ class AppRouter {
       GoRoute(
         path: '/cat_details',
         name: 'cat_details',
-        pageBuilder: (context, state) =>
-            const MaterialPage(child: CatDetailedView()),
+        pageBuilder: (context, state) {
+          final Cat cat = state.extra as Cat;
+          final String heroTag = state.queryParameters['heroTag'] as String;
+          print('heroTag: $heroTag');
+          return MaterialPage(
+            child: CatDetailsView(
+              cat: cat,
+              heroTag: heroTag,
+            ),
+          );
+        },
       ),
       GoRoute(
         path: '/login',
