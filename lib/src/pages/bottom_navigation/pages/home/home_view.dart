@@ -3,22 +3,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../values/app_colors.dart';
 import '../../widgets/cat_item_widget.dart';
-import 'home_cubit/home_cubit.dart';
+import '../cat_cubit/cat_cubit.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocConsumer<HomeCubit, HomeState>(
+  Widget build(BuildContext context) => BlocConsumer<CatCubit, CatState>(
         listener: (context, state) {
-          if (state is HomeError) {
+          if (state is CatError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
               ),
             );
           }
-          if (state is HomeNoInternet) {
+          if (state is CatNoInternet) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('No internet connection'),
@@ -27,7 +27,7 @@ class HomeView extends StatelessWidget {
               ),
             );
           }
-          if (state is HomeLoading) {
+          if (state is CatLoading) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Loading...'),
@@ -41,7 +41,7 @@ class HomeView extends StatelessWidget {
           onNotification: (notification) {
             if (notification is ScrollEndNotification &&
                 notification.metrics.extentAfter == 0) {
-              context.read<HomeCubit>().loadMore();
+              context.read<CatCubit>().loadMore();
             }
 
             return false;

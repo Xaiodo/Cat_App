@@ -7,8 +7,8 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../pages/cat_cubit/cat_cubit.dart';
 import '../pages/favorites/favorites_view.dart';
-import '../pages/home/home_cubit/home_cubit.dart';
 import '../pages/home/repositories/cat_repository.dart';
 
 class BottomNavigationView extends StatelessWidget {
@@ -21,7 +21,7 @@ class BottomNavigationView extends StatelessWidget {
             create: (context) => BottomNavigationCubit(),
           ),
           BlocProvider(
-            create: (context) => HomeCubit(
+            create: (context) => CatCubit(
               repository: context.read<CatRepository>(),
               connectivity: context.read<Connectivity>(),
             ),
