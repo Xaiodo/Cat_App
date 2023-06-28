@@ -11,7 +11,7 @@ class CatLocalService {
     final localCats = await getCats();
     localCats.addAll(cats);
     await _box.clear();
-    await _box.addAll(cats);
+    await _box.addAll(localCats);
   }
 
   Future<void> clearCats() async {
