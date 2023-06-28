@@ -22,6 +22,10 @@ class CatCubit extends Cubit<CatState> {
 
   List<Cat> get favoriteCats => state.cats.where((cat) => cat.isLiked).toList();
 
+  int get favoriteCatsCount => favoriteCats.length;
+
+  int get allCatsCount => state.cats.length;
+
   Future<void> init() async {
     try {
       emit(CatLoading(cats: state.cats, page: state.page));
