@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../../../values/app_constants.dart';
+import '../../values/app_constants.dart';
 
 class CatFactsService {
   CatFactsService({required Dio dio}) : _dio = dio;
@@ -9,7 +9,7 @@ class CatFactsService {
   Future<List<String>> getCatFacts(int page) async {
     try {
       final response = await _dio.get(
-        catFactsApiUrl,
+        Strings.catFactsApiUrl,
         queryParameters: {
           'page': page,
         },

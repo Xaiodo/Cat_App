@@ -2,17 +2,17 @@ import 'package:cat_app/src/pages/bottom_navigation/pages/home/model/cat_image.d
 import 'package:cat_app/src/values/app_constants.dart';
 import 'package:dio/dio.dart';
 
-class CatImageService {
-  const CatImageService({required Dio dio}) : _dio = dio;
+class CatImagesService {
+  const CatImagesService({required Dio dio}) : _dio = dio;
 
   final Dio _dio;
 
   Future<List<CatImage>> getCatImages(int page) async {
     try {
       final response = await _dio.get(
-        catImagesApiUrl,
+        Strings.catImagesApiUrl,
         queryParameters: {
-          'x_api_key': catImagesApiKey,
+          'x_api_key': Strings.catImagesApiKey,
           'page': page,
         },
       );
