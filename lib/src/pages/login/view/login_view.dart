@@ -5,6 +5,8 @@ import 'package:cat_app/src/values/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../app/app_bloc/app_ui_events.dart';
+
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
@@ -14,9 +16,9 @@ class LoginView extends StatelessWidget {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('I like Mark Zuckerberg (NOT!)'),
+          title: const Text(Strings.alertTitleText),
           content: const Text(
-            'This feature is not implemented yet. Because I can`t register project in facebook developers console. Mu app package name is the invalid one lol.',
+            Strings.alertContentText,
           ),
           actions: [
             TextButton(
@@ -30,42 +32,54 @@ class LoginView extends StatelessWidget {
       );
     }
 
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(),
-            Image.asset(
-              loginCatImagePath,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              welcomeText,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const Spacer(),
-            LoginButton(
-              image: const AssetImage(googleLogoImagePath),
-              text: signInWithGoogleText,
-              onPressed: () {
-                context.read<AppBloc>().loginWithGoogle();
-              },
-              color: AppColors.green,
-            ),
-            const SizedBox(height: 16),
-            LoginButton(
-              image: const AssetImage(facebookLogoImagePath),
-              text: signInWithFacebookText,
-              onPressed: () {
-                showAlertDialog();
-              },
-              color: AppColors.lightBlue,
-            ),
-            const SizedBox(height: 50),
-          ],
+    return BlocListener<AppBloc, AppState>(
+      listener: (context, state) {
+        if (state.lastEvent != null) {
+          final event = state.lastEvent;
+
+          if (event is AppUiEventsShowSnackbar) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(event.message),
+              ),
+            );
+          }
+          state.popEvent(state.lastEvent!);
+        }
+      },
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Spacer(),
+              Image.asset(
+                Strings.loginCatImagePath,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                Strings.welcomeText,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const Spacer(),
+              LoginButton(
+                image: const AssetImage(Strings.googleLogoImagePath),
+                text: Strings.signInWithGoogleText,
+                onPressed: context.read<AppBloc>().loginWithGoogle,
+                color: AppColors.green,
+              ),
+              const SizedBox(height: 16),
+              LoginButton(
+                image: const AssetImage(Strings.facebookLogoImagePath),
+                text: Strings.signInWithFacebookText,
+                onPressed: showAlertDialog,
+                color: AppColors.lightBlue,
+              ),
+              const SizedBox(height: 50),
+            ],
+          ),
         ),
       ),
     );
