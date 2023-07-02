@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-import '../model/cat.dart';
+import '../../pages/bottom_navigation/pages/home/model/cat.dart';
 
 class CatLocalService {
   CatLocalService({required Box box}) : _box = box;
@@ -11,7 +11,7 @@ class CatLocalService {
     final localCats = await getCats();
     localCats.addAll(cats);
     await _box.clear();
-    await _box.addAll(cats);
+    await _box.addAll(localCats);
   }
 
   Future<void> clearCats() async {

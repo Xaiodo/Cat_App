@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cat_app/src/pages/bottom_navigation/pages/cat_cubit/cat_cubit.dart';
 import 'package:cat_app/src/pages/bottom_navigation/pages/home/model/cat.dart';
 import 'package:cat_app/src/pages/bottom_navigation/widgets/cat_like_button.dart';
+import 'package:cat_app/src/values/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../blocs/cat_cubit/cat_cubit.dart';
 
 class CatDetailsView extends StatelessWidget {
   const CatDetailsView({
@@ -19,7 +21,7 @@ class CatDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cat Details'),
+        title: const Text(Strings.catDetailsAppBarText),
         actions: [
           BlocBuilder<CatCubit, CatState>(
             builder: (context, state) {

@@ -1,8 +1,9 @@
+import 'package:cat_app/src/pages/bottom_navigation/widgets/app_grid_view.dart';
+import 'package:cat_app/src/values/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../widgets/cat_item_widget.dart';
-import '../cat_cubit/cat_cubit.dart';
+import '../../../../blocs/cat_cubit/cat_cubit.dart';
 
 class FavoritesView extends StatelessWidget {
   const FavoritesView({super.key});
@@ -13,24 +14,13 @@ class FavoritesView extends StatelessWidget {
           final favoriteCats = context.read<CatCubit>().favoriteCats;
           if (favoriteCats.isEmpty) {
             return const Center(
-              child: Text('No favorite cats. Try to add some'),
+              child: Text(Strings.noFavoriteCatsText),
             );
           }
-          if (state is CatLoaded) {
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.8,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-              ),
-              padding: const EdgeInsets.all(10),
-              itemCount: favoriteCats.length,
-              itemBuilder: (context, index) => CatItemWidget(
-                heroTag: '${favoriteCats[index].id}favorite',
-                cat: favoriteCats[index],
-              ),
-              physics: const ClampingScrollPhysics(),
+          if (state is CatLoaded || state is CatNoInternet) {
+            return AppGridView(
+              cats: favoriteCats,
+              heroTag: Strings.favoriteCatsHeroTag,
             );
           } else {
             return const Center(child: CircularProgressIndicator());

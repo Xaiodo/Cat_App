@@ -1,19 +1,19 @@
 import 'package:cat_app/src/pages/bottom_navigation/pages/home/model/cat.dart';
 
-import '../services/cat_facts_service.dart';
-import '../services/cat_image_service.dart';
-import '../services/cat_local_service.dart';
+import '../../services/cats_services/cat_facts_service.dart';
+import '../../services/cats_services/cat_images_service.dart';
+import '../../services/cats_services/cats_local_service.dart';
 
-class CatRepository {
-  CatRepository({
-    required CatImageService catImageService,
+class CatsRepository {
+  CatsRepository({
+    required CatImagesService catImageService,
     required CatFactsService catFactService,
     required CatLocalService catLocalService,
   })  : _catImageService = catImageService,
         _catFactService = catFactService,
         _catLocalService = catLocalService;
 
-  final CatImageService _catImageService;
+  final CatImagesService _catImageService;
   final CatFactsService _catFactService;
   final CatLocalService _catLocalService;
 
@@ -37,6 +37,13 @@ class CatRepository {
     } catch (e) {
       throw Exception('Error getting cats: $e');
     }
+  }
+
+  Future<List<Cat>> refreshCats() async {
+    final newCats = await getRemoteCats(0);
+    await _catLocalService.clearCats();
+    await _catLocalService.saveCats(newCats);
+    return newCats;
   }
 
   Future<List<Cat>> getLocalCats() async {

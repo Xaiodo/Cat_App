@@ -1,10 +1,11 @@
-import 'package:cat_app/src/pages/bottom_navigation/pages/cat_cubit/cat_cubit.dart';
 import 'package:cat_app/src/pages/bottom_navigation/widgets/cat_like_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cat_app/src/values/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../blocs/cat_cubit/cat_cubit.dart';
 import '../../../values/app_colors.dart';
 import '../pages/home/model/cat.dart';
 
@@ -22,7 +23,7 @@ class CatItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => context.pushNamed(
-        'cat_details',
+        Strings.catDetailsName,
         extra: cat,
         queryParameters: {
           'heroTag': heroTag,
@@ -54,10 +55,13 @@ class CatItemWidget extends StatelessWidget {
                       ),
                       imageBuilder: (context, imageProvider) => Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
                           image: DecorationImage(
                             image: imageProvider,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),

@@ -1,21 +1,41 @@
 part of 'app_bloc.dart';
 
-@immutable
-abstract class AppState extends Equatable {
-  const AppState();
+enum AppAuthEvent {
+  initializing,
+  authenticated,
+  authentication;
 
-  AppState get initializing => AppInitializing();
+  get isInitializing => this == AppAuthEvent.initializing;
 
-  AppState get authentication => AppAuthentication();
+  get isAuthenticated => this == AppAuthEvent.authenticated;
 
-  AppState get authenticated => AppAuthenticated();
-
-  @override
-  List<Object> get props => [];
+  get isAuthentication => this == AppAuthEvent.authentication;
 }
 
-class AppInitializing extends AppState {}
+@immutable
+class AppState extends Equatable with WithUiEvents {
+  const AppState({
+    this.events = const [],
+    this.authEvent = AppAuthEvent.initializing,
+  });
 
-class AppAuthenticated extends AppState {}
+  final AppAuthEvent authEvent;
 
-class AppAuthentication extends AppState {}
+  @override
+  final List<UiEvent> events;
+
+  @override
+  updatedEvents(List<UiEvent> events) => AppState(events: events);
+
+  AppState get initializing =>
+      const AppState(authEvent: AppAuthEvent.initializing);
+
+  AppState get authentication =>
+      const AppState(authEvent: AppAuthEvent.authentication);
+
+  AppState get authenticated =>
+      const AppState(authEvent: AppAuthEvent.authenticated);
+
+  @override
+  List<Object> get props => [authEvent, events];
+}

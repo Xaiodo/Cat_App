@@ -1,15 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:cat_app/src/pages/bottom_navigation/pages/home/repositories/cat_repository.dart';
+import 'package:cat_app/src/repositories/cats_repository/cats_repository.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:equatable/equatable.dart';
 
-import '../home/model/cat.dart';
+import '../../pages/bottom_navigation/pages/home/model/cat.dart';
 
 part 'cat_state.dart';
 
 class CatCubit extends Cubit<CatState> {
   CatCubit({
-    required CatRepository repository,
+    required CatsRepository repository,
     required Connectivity connectivity,
   })  : _catRepository = repository,
         _connectivity = connectivity,
@@ -18,9 +18,13 @@ class CatCubit extends Cubit<CatState> {
   }
 
   final Connectivity _connectivity;
-  final CatRepository _catRepository;
+  final CatsRepository _catRepository;
 
   List<Cat> get favoriteCats => state.cats.where((cat) => cat.isLiked).toList();
+
+  int get favoriteCatsCount => favoriteCats.length;
+
+  int get allCatsCount => state.cats.length;
 
   Future<void> init() async {
     try {
@@ -65,7 +69,7 @@ class CatCubit extends Cubit<CatState> {
         emit(CatNoInternet(cats: state.cats, page: state.page));
         return;
       }
-      final cats = await _catRepository.getRemoteCats(state.page + 1);
+      final cats = await _catRepository.refreshCats();
       emit(CatLoaded(cats: cats, page: state.page));
     } catch (e) {
       emit(
