@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:cat_app/app/app_bloc/app_bloc.dart';
 import 'package:cat_app/src/pages/bottom_navigation/pages/home/model/cat.dart';
 import 'package:cat_app/src/pages/login/view/login_view.dart';
+import 'package:cat_app/src/values/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/bottom_navigation/pages/cat_details_view.dart';
+import '../pages/bottom_navigation/pages/cat_details/cat_details_view.dart';
 import '../pages/bottom_navigation/view/bottom_navigation_view.dart';
 
 class AppRouter {
@@ -16,21 +17,19 @@ class AppRouter {
   final AppBloc _appBloc;
 
   late final GoRouter routerConfig = GoRouter(
-    debugLogDiagnostics: true,
     routes: [
       GoRoute(
-        path: '/',
-        name: 'home',
+        path: Strings.homePath,
+        name: Strings.homeName,
         pageBuilder: (context, state) =>
             const MaterialPage(child: BottomNavigationView()),
       ),
       GoRoute(
-        path: '/cat_details',
-        name: 'cat_details',
+        path: Strings.catDetailsPath,
+        name: Strings.catDetailsName,
         pageBuilder: (context, state) {
           final Cat cat = state.extra as Cat;
           final String heroTag = state.queryParameters['heroTag'] as String;
-          print('heroTag: $heroTag');
           return MaterialPage(
             child: CatDetailsView(
               cat: cat,
@@ -40,19 +39,22 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: '/login',
-        name: 'login',
-        pageBuilder: (context, state) => const MaterialPage(child: LoginView()),
+        path: Strings.loginPath,
+        name: Strings.loginName,
+        pageBuilder: (context, state) => const MaterialPage(
+          child: LoginView(),
+        ),
       ),
     ],
+    initialLocation: Strings.homePath,
     redirect: (context, state) {
-      final loggedIn = context.read<AppBloc>().state is AppAuthenticated;
-      final isLoginLocation = state.location == '/login';
+      final loggedIn = context.read<AppBloc>().state.authEvent.isAuthenticated;
+      final isLoginLocation = state.location == Strings.loginPath;
       if (isLoginLocation && loggedIn) {
-        return '/';
+        return Strings.homePath;
       }
       if (!isLoginLocation && !loggedIn) {
-        return '/login';
+        return Strings.loginPath;
       }
       return null;
     },

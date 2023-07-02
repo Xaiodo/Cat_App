@@ -8,17 +8,13 @@ class AuthDao {
 
   static const _accessTokenKey = 'accessToken';
 
-  Future<void> saveAccessToken(String accessToken) async {
-    await _flutterSecureStorage.write(key: _accessTokenKey, value: accessToken);
-  }
+  Future<void> saveAccessToken(String accessToken) =>
+      _flutterSecureStorage.write(key: _accessTokenKey, value: accessToken);
 
-  Future<void> deleteAccessToken() async {
-    await _flutterSecureStorage.delete(key: _accessTokenKey);
-  }
+  Future<void> deleteAccessToken() =>
+      _flutterSecureStorage.delete(key: _accessTokenKey);
 
-  Future<bool> hasAccessToken() async {
-    final String? accessToken =
-        await _flutterSecureStorage.read(key: _accessTokenKey);
-    return accessToken != null;
-  }
+  Future<bool> hasAccessToken() => _flutterSecureStorage
+      .read(key: _accessTokenKey)
+      .then((value) => value != null);
 }
