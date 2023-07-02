@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../blocs/cat_cubit/cat_cubit.dart';
 import '../../../../values/app_colors.dart';
-import '../../widgets/cat_item_widget.dart';
-import '../cat_cubit/cat_cubit.dart';
+import '../../../../values/app_constants.dart';
+import '../../widgets/app_grid_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -15,6 +16,8 @@ class HomeView extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
+                duration: const Duration(seconds: 1),
+                backgroundColor: AppColors.primary,
               ),
             );
           }
@@ -38,7 +41,7 @@ class HomeView extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state.cats.isEmpty && state is CatNoInternet) {
+          if (state is CatNoInternet && state.cats.isEmpty) {
             return const Center(
               child: Text('No internet connection = no cats'),
             );
@@ -51,20 +54,12 @@ class HomeView extends StatelessWidget {
               }
               return false;
             },
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.8,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+            child: RefreshIndicator(
+              onRefresh: context.read<CatCubit>().refresh,
+              child: AppGridView(
+                cats: state.cats,
+                heroTag: Strings.homeHeroTag,
               ),
-              padding: const EdgeInsets.all(10),
-              itemCount: state.cats.length,
-              itemBuilder: (context, index) => CatItemWidget(
-                cat: state.cats[index],
-                heroTag: '${state.cats[index].id}home',
-              ),
-              physics: const ClampingScrollPhysics(),
             ),
           );
         },
